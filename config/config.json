@@ -1,0 +1,52 @@
+{
+ 
+    "development": {
+ 
+        "username": "enotify",
+ 
+        "password": "Twsslsbnstas1",
+ 
+        "database": "sequelize_passport",
+ 
+        "host": "iodrop.net",
+ 
+        "dialect": "mysql",
+
+        "ssl": true,
+
+        "dialectOptions": {
+            "ssl":{
+                "ca": ""
+            }
+        }
+    },
+ 
+    "test": {
+ 
+        "username": "",
+ 
+        "password": null,
+ 
+        "database": "",
+ 
+        "host": "",
+ 
+        "dialect": "mysql"
+ 
+    },
+ 
+    "production": {
+ 
+        "username": "",
+ 
+        "password": null,
+ 
+        "database": "",
+ 
+        "host": "127.0.0.1",
+ 
+        "dialect": "mysql"
+ 
+    }
+ 
+}

@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.deploySubpath": "",
+    "appService.defaultWebAppToDeploy": "/subscriptions/f815df9d-485e-4e8d-ad89-b1442767c9e7/resourceGroups/SE_Project/providers/Microsoft.Web/sites/eNotifyProject"
+}

@@ -23,6 +23,7 @@ app.engine('hbs', exphbs({
 }));
 app.set('view engine', '.hbs');
 
+app.use('/',express.static(__dirname +'/public'));
 // app.get('/', function(req, res) {
  
 //     res.send('Welcome to Passport with Sequelize');

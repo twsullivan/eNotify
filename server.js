@@ -23,12 +23,14 @@ app.engine('hbs', exphbs({
 }));
 app.set('view engine', '.hbs');
 
+/* app.get('/', function(req, res) {
+ 
+    res.send('Welcome to Passport with Sequelize');
+
+}); */
+
 app.use('/',express.static(__dirname +'/public'));
-// app.get('/', function(req, res) {
- 
-//     res.send('Welcome to Passport with Sequelize');
- 
-// });
+
 
 //Models
 var models = require("./app/models");

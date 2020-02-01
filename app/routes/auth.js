@@ -12,7 +12,7 @@ module.exports = function (app, passport) {
         successRedirect: '/dashboard',
         failureRedirect: '/signup'
     }));
-    //app.get('/',isLoggedIn, authController.dashboard);
+    app.get('/', authController.home);
     app.get('/dashboard',isLoggedIn, authController.dashboard);
     app.get('/logout',authController.logout);
 

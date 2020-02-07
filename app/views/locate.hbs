@@ -1,0 +1,51 @@
+<p><button onclick="geoFindMe()">Show my location</button></p>
+<div id="map" style="height:320px;width:480px"></div>
+<script>
+    var latitude;
+    var longitude;
+    var output = document.getElementById("map");
+
+    function geoFindMe() {
+        if (!navigator.geolocation) {
+            output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+            return;
+        }
+        output.innerHTML = "<p>Locating…</p>";
+        navigator.geolocation.getCurrentPosition(success, error);
+    }
+
+    function success(position) {
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+        output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
+
+        // Initialize and add the map
+        // The location of Uluru
+        var uluru = { lat: parseFloat(latitude), lng: parseFloat(longitude) };
+        console.log(uluru);
+        // The map, centered at Uluru
+        var map = new google.maps.Map(
+            document.getElementById('map'), { zoom: 17, center: uluru });
+        // The marker, positioned at Uluru
+        var marker = new google.maps.Marker({ position: uluru, map: map });
+
+        OneSignal.push(function () {
+            OneSignal.sendTags({
+                latitude: latitude,
+                long: longitude
+            });
+        });
+    }
+
+    function error(){}
+
+
+</script>
+<!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcsH55isEQAgKEPi0RFi6pDgY2gD81C_Q&callback=geoFindMe">
+</script>

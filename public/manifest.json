@@ -1,13 +1,19 @@
 {
-    "short_name": "eNotify",
-    "name": "eNotify",
-    "icons": [
+  "short_name": "eNotify",
+  "name": "eNotify",
+  "icons": [
     {
-    "src":"/eNotify.png",
-    "sizes": "192x192",
-    "type": "image/png"
+      "src": "/eNotify-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/eNotify-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
-    ],
-    "start_url": "/?utm_source=homescreen",
-    "display": "standalone"
-  }
+  ],
+  "start_url": "/?utm_source=homescreen",
+  "theme_color": "#000000",
+  "display": "standalone"
+}

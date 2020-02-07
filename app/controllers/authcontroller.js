@@ -6,6 +6,10 @@ exports.home = function(req, res) {
 
 }
 
+exports.locate = function(req, res) {
+    res.render('locate');
+}
+
 exports.signup = function(req, res) {
  
     res.render('signup');
@@ -14,7 +18,7 @@ exports.signup = function(req, res) {
 
 exports.signin = function(req, res) {
  
-    res.render('signin');
+    res.render('login');
  
 }
 

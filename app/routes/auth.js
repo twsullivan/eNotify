@@ -13,6 +13,7 @@ module.exports = function (app, passport) {
         failureRedirect: '/signup'
     }));
     app.get('/', authController.home);
+    app.get('/locate', authController.locate);
     app.get('/dashboard',isLoggedIn, authController.dashboard);
     app.get('/logout',authController.logout);
 

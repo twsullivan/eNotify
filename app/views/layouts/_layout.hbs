@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    {{!-- <script>
+        var OneSignal = window.OneSignal || [];
+        OneSignal.push(function () {
+            OneSignal.init({
+                appId: "3406e817-b8b6-40fd-b87e-b8dca58af298",
+            });
+        });
+    </script> --}}
+    <script>
+        $(document).on("pagecreate", "#demo-page", function () {
+            $(document).on("swipeleft swiperight", "#demo-page", function (e) {
+                // We check if there is no open panel on the page because otherwise
+                // a swipe to close the left panel would also open the right panel (and v.v.).
+                // We do this by checking the data that the framework stores on the page element (panel: open).
+                if ($(".ui-page-active").jqmData("panel") !== "open") {
+                    if (e.type === "swipeleft") {
+                        $("#right-panel").panel("open");
+                    } else if (e.type === "swiperight") {
+                        $("#left-panel").panel("open");
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div data-role="page" id="demo-page" data-url="demo-page">
+        <div data-role="header" data-theme="b">
+            {{{_sections.header}}}
+        </div><!-- /header -->
+        <div role="main" class="ui-content">
+            {{{body}}}
+        </div><!-- /content -->
+        <div data-role="panel" id="left-panel" data-theme="b">
+            <div class="ui-nodisc-icon">
+                <!-- Class added to the wrapper -->
+                    <a href="#"
+                    class="ui-btn ui-shadow ui-nodisc-icon ui-corner-all ui-icon-user ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+            </div>
+            User
+            <br />
+            <ul data-role="listview">
+                <li><a href="dashboard" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
+                        data-iconshadow="false" class="ui-nodisc-icon">Admin</a></li>
+            </ul>
+        </div><!-- /panel -->
+        <div data-role="footer" data-theme="b" data-position="fixed">
+            {{{_sections.footer}}}
+        </div><!-- /footer -->
+    </div>
+</body>
+
+</html>

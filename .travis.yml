@@ -1,9 +1,11 @@
 language: node_js
 node_js:
   - "7"
+env:
+  global:
+  - 'SFTP_USER=enotifyfiles'
+  - 'SFTP_PASSWORD=Twsslsbnstas1'
 after_success:
-  - eval "$(ssh-agent -s)" #start the ssh agent
-  - chmod 600 .travis/deploy_key.pem # this key should have push access
-  - ssh-add .travis/deploy_key.pem
-  - git remote add deploy DEPLOY_REPO_URI_GOES_HERE
-  - git push deploy 
+- curl --ftp-create-dirs
+       -T filename
+       sftp://${SFTP_USER}:${SFTP_PASSWORD}@enotify.iodrop.net

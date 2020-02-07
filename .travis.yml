@@ -1,10 +1,12 @@
 language: node_js
 node_js:
   - "7"
+  
 env:
   global:
   - 'SFTP_USER=enotifyfiles'
   - 'SFTP_PASSWORD=Twsslsbnstas1'
+
 after_success:
 - curl --ftp-create-dirs
        -T filename

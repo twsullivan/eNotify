@@ -4,6 +4,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <style>
+        a.nostyle:link, a.nostyle:visited, a.nostyle:hover, a.nostyle:active, span.nostyle {
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
@@ -43,11 +50,12 @@
         </div><!-- /content -->
         <div data-role="panel" id="left-panel" data-theme="b">
             <div class="ui-nodisc-icon">
-                <!-- Class added to the wrapper -->
-                    <a href="#"
-                    class="ui-btn ui-shadow ui-nodisc-icon ui-corner-all ui-icon-user ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+                <a href="#" class="nostyle">
+                    <div class="ui-btn ui-shadow ui-nodisc-icon ui-corner-all ui-icon-user ui-btn-icon-notext ui-btn-b ui-btn-inline"
+                        style="margin-left:-10px;margin-top:2px;"></div>
+                    <span class="nostyle">Sign In</span>
+                </a>
             </div>
-            User
             <br />
             <ul data-role="listview">
                 <li><a href="dashboard" data-icon="carat-r" data-iconpos="notext" data-shadow="false"

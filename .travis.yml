@@ -1,15 +1,18 @@
 language: node_js
 node_js:
   - "7"
-  
+
 env:
   global:
   - 'SFTP_USER=enotifyfiles'
   - 'SFTP_PASSWORD=Twsslsbnstas1'
+  - 'SFTP_KEY=ZHuTDSubkrG2dyGcRxc3Nun0pc0Ho2iK5xLzaWeV9XQ'
 
 after_success:
+- echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
 - curl --ftp-create-dirs
        -T filename
+       --key /tmp/sftp_rsa
        sftp://${SFTP_USER}:${SFTP_PASSWORD}@enotify.iodrop.net
 
 script:

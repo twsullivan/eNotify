@@ -9,3 +9,6 @@ after_success:
 - curl --ftp-create-dirs
        -T filename
        sftp://${SFTP_USER}:${SFTP_PASSWORD}@enotify.iodrop.net
+
+script:
+- echo "skipping tests"

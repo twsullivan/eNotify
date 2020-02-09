@@ -12,16 +12,17 @@
         }
     </style>
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-    {{!-- <script>
+    <script>
         var OneSignal = window.OneSignal || [];
         OneSignal.push(function () {
             OneSignal.init({
                 appId: "3406e817-b8b6-40fd-b87e-b8dca58af298",
             });
         });
-    </script> --}}
+    </script>
     <script>
         $(document).on("pagecreate", "#demo-page", function () {
             $(document).on("swipeleft swiperight", "#demo-page", function (e) {

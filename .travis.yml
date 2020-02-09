@@ -15,5 +15,3 @@ after_success:
        --key /tmp/sftp_rsa
        sftp://${SFTP_USER}:${SFTP_PASSWORD}@enotify.iodrop.net
 
-script:
-- echo "skipping tests"

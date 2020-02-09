@@ -2,16 +2,18 @@ language: node_js
 node_js:
   - "7"
 
-env:
-  global:
-  - 'SFTP_USER=[username]'
-  - 'SFTP_PASSWORD=[password]'
-  - 'SFTP_KEY=[key]'
+#env:
+#  global:
+#  - 'SFTP_USER=[username]'
+#  - 'SFTP_PASSWORD=[password]'
+#  - 'SFTP_KEY=[key]'
 
-after_success:
-- echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
-- curl --ftp-create-dirs
-       -T filename
-       --key /tmp/sftp_rsa
-       sftp://${SFTP_USER}:${SFTP_PASSWORD}@enotify.iodrop.net
+#  after_success:
+#- echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
+#- curl --ftp-create-dirs
+#       -T filename
+#       --key /tmp/sftp_rsa
+#       sftp://${SFTP_USER}:${SFTP_PASSWORD}@enotify.iodrop.net
 
+#script:
+#- echo "skipping tests"

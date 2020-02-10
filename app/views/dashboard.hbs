@@ -13,7 +13,7 @@
 
     ctx.restore();
     var fontSize = (height / 75).toFixed(2);
-    ctx.font = fontSize + "em sans-serif";
+    ctx.font = fontSize + "em open sans";
     ctx.textBaseline = "middle";
 
     var text = "75%",
@@ -31,13 +31,12 @@
       "labels": [
         "Red", 
         "Blue", 
-        "Yellow"
       ],
       "datasets": [
         { 
           "label": "Message Status", 
-          "data": [300, 50, 100], 
-          "backgroundColor": ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"]
+          "data": [75, 25], 
+          "backgroundColor": ["rgb(75, 192, 192)", "rgb(255, 99, 132)"] //, "rgb(54, 162, 235)", "rgb(255, 205, 86)"] //, "rgb(75, 192, 192)"]
         }
       ] 
     },

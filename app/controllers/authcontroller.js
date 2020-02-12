@@ -1,11 +1,5 @@
 var exports = module.exports = {}
 
-exports.home = function(req, res) {
-
-    res.render('home');
-
-}
-
 exports.locate = function(req, res) {
     res.render('locate');
 }
@@ -19,12 +13,6 @@ exports.signup = function(req, res) {
 exports.signin = function(req, res) {
  
     res.render('login');
- 
-}
-
-exports.dashboard = function(req, res) {
- 
-    res.render('dashboard');
  
 }
 

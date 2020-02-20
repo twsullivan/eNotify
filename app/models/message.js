@@ -15,23 +15,25 @@ module.exports = function(sequelize, Sequelize) {
 
         sentBy: {
             type: Sequelize.INTEGER,
-            notEmpty: true,
-            // references: {
-            //     model: 'user',
-            //     key: 'id'
-            // } 
+            notEmpty: true
         },
 
         locationId: {
             type: Sequelize.INTEGER,
-            notEmpty: true,
-            // references: {
-            //     model: 'location',
-            //     key: 'id'
-            // }
+            notEmpty: true
         }
     });
  
+
+    Message.associate = (models, options) => {
+        Message.hasOne(models.user, options);
+        Message.hasMany(models.location, options);
+    }
+
+    // Message.associate = (models, options) => {
+    //     Message.hasMany(models.location, options)
+    // }
+
     return Message;
  
 }

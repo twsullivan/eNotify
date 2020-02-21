@@ -50,6 +50,10 @@ module.exports = function(sequelize, Sequelize) {
  
     });
  
+    User.associate = (models, options) => {
+        User.hasMany(models.message, options);
+    }
+
     return User;
  
 }

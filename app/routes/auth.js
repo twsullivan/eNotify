@@ -1,5 +1,6 @@
 var authController = require('../controllers/authcontroller.js');
 var homeController = require('../controllers/homecontroller.js');
+var messageController = require('../controllers/messageController.js');
 var dashboardController = require('../controllers/dashboardcontroller.js');
 
 module.exports = function (app, passport) {
@@ -17,6 +18,8 @@ module.exports = function (app, passport) {
     app.get('/', homeController.home);
     app.get('/locate', authController.locate);
     app.get('/dashboard',isLoggedIn, dashboardController.dashboard);
+    app.get('/message/new', messageController.new);
+    app.post('/message/send', messageController.send);
     app.get('/logout',authController.logout);
 
     function isLoggedIn(req, res, next) {

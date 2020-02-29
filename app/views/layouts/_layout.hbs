@@ -61,7 +61,11 @@
                 <a href="#" class="nostyle">
                     <div class="ui-btn ui-shadow ui-nodisc-icon ui-corner-all ui-icon-user ui-btn-icon-notext ui-btn-b ui-btn-inline"
                         style="margin-left:-10px;margin-top:2px;"></div>
-                    <span class="nostyle">Sign In</span>
+                    {{#if isAuthenticated}}
+                        <span class="nostyle">{{username}}</span>
+                    {{else}}
+                        <span class="nostyle">Sign In</span>
+                    {{/if}}
                 </a>
             </div>
             <br />
@@ -69,9 +73,7 @@
                 {{{_sections.menu}}}
             </ul>
         </div><!-- /panel -->
-        <div data-role="footer" data-theme="a" data-position="fixed">
-            {{{_sections.footer}}}
-        </div><!-- /footer -->
+        {{{_sections.footer}}}
     </div>
 </body>
 

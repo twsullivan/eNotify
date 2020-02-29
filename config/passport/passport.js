@@ -85,7 +85,7 @@ module.exports = function (passport, user) {
 
         User.findByPk(id).then(function (user) {
             if (user) {
-
+                
                 done(null, user.get());
 
             } else {

@@ -34,7 +34,10 @@ exports.home = function(req, res) {
 
         users.every(user => console.log(user.firstname + ' ' + user.lastname));
  
-        // Render home view and pass in users
-        res.render('home',users);
+        // Render home view and pass in user
+        res.render('home',{
+            isAuthenticated: req.isAuthenticated(),
+            username: (req.user != undefined ? req.user.firstname + ' ' + req.user.lastname : 'Sign In')
+        });
     });
 }

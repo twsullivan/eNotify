@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // For Passport
-app.use(session({ secret: 'keyboard cat',resave: true, saveUninitialized:true})); // session secret
+app.use(session({ secret: 'keyboard cat',resave: true, saveUninitialized:false})); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
@@ -21,10 +21,10 @@ app.engine('hbs', exphbs({
     extname: '.hbs',
     defaultLayout: '_layout',
     helpers: {
-      section: function(name, options) { 
-        if (!this._sections) this._sections = {};
-          this._sections[name] = options.fn(this); 
-          return null;
+        section: function (name, options) {
+            if (!this._sections) this._sections = {};
+            this._sections[name] = options.fn(this);
+            return null;
         }
     }
 }));

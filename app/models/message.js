@@ -14,6 +14,10 @@ module.exports = function(sequelize, Sequelize) {
         }
     });
  
+    Message.associate = (models, options) => {
+        Message.belongsTo(models.user, options);
+    };
+
     return Message;
  
 }

@@ -1,39 +1,48 @@
 var moment = require('moment');
 var sequelize = require("sequelize");
 
-exports.getMessages = function(models) {
+// Pads a number wir string
+Number.prototype.padLeft = function (n,str){
+    return Array(n-String(this).length+1).join(str||'0')+this;
+  }
+  
+// Returns a promise containing a json object of messages grouped by date
+exports.getMessages = function (models) {
 
-    var Messages = models.message;
+    return new Promise(function (resolve, reject) {
 
-    return Messages.findAll({
-        attributes: [[sequelize.fn('date', sequelize.col('createdAt')), 'createdAt'], 
-          [sequelize.fn('count', sequelize.col('id')),'count']], 
-        group: [[sequelize.fn('date', sequelize.col('createdAt')), 'createdAt']]
-      });
+        // Get messages and order by createdAt date
+        models.message.findAll({
+            include : [{ model: models.user, model: models.location}],
+            order: [
+                ['createdAt', 'DESC']
+            ]
+        }).then(data => {
+
+            // Group rows in object using createdAt
+            var groups = data.reduce(function (groups, row) {
+
+                var d = new Date(row.createdAt);
+                var strDate = (d.getMonth() + 1).padLeft(2) + '/' + (d.getDate() + 1).padLeft(2) + '/' + d.getFullYear();
+
+                if (!groups[strDate]) groups[strDate] = [];
+
+                groups[strDate].push(row);
+
+                return groups;
+
+            }, Object.create(null));
+
+            resolve(groups);
+        })
+    });
+
 }
 
-exports.getMessagesByDate = function(models, d) {
-    var Messages = models.message;
-    console.log(d);
-    return Messages.findAll({
-        attributes: {
-            include: [[
-                sequelize.literal(`(
-                SELECT CONCAT(firstname,' ',lastname) AS name
-                FROM users
-                WHERE
-                    users.id = userId
-            )`), 'name'
-            ]]
-        },
-        where: sequelize.where(sequelize.fn('date', sequelize.col('createdAt')), '=', sequelize.fn('date', new Date(d)))
-    })
-}
-
-exports.getMessage = function(models) {
+exports.getMessage = function (models) {
     return null;
 }
 
-exports.sendMessage = function(message) {
+exports.sendMessage = function (message) {
     return null;
 }

@@ -3,7 +3,7 @@ var exports = module.exports = {}
 var moment = require('moment');
 var sequelize = require("sequelize");
 var models = require("../models");
-var messageService = require("../services/messageService.js");
+var messageService = require("../services/messageService.js")(models);
 
 exports.new = function(req, res) {
 

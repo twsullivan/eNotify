@@ -8,6 +8,14 @@ module.exports = function(sequelize, Sequelize) {
             type: Sequelize.INTEGER
         },
 
+        extid: {
+            type: Sequelize.UUID
+        },
+
+        receipients: {
+            type: Sequelize.INTEGER
+        },
+
         text: {
             type: Sequelize.TEXT,
             notEmpty: true

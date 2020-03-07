@@ -1,48 +1,61 @@
-var moment = require('moment');
-var sequelize = require("sequelize");
+module.exports = (models) => {
+    var moment = require('moment');
+    var sequelize = require("sequelize");
+    var module = {};
 
-// Pads a number wir string
-Number.prototype.padLeft = function (n,str){
-    return Array(n-String(this).length+1).join(str||'0')+this;
-  }
-  
-// Returns a promise containing a json object of messages grouped by date
-exports.getMessages = function (models) {
+    // Pads a number wir string
+    Number.prototype.padLeft = function (n, str) {
+        return Array(n - String(this).length + 1).join(str || '0') + this;
+    }
 
-    return new Promise(function (resolve, reject) {
+    // Returns a promise containing a json object of messages grouped by date
+    module.getAll = function () {
 
-        // Get messages and order by createdAt date
-        models.message.findAll({
-            include : [{ model: models.user, model: models.location}],
-            order: [
-                ['createdAt', 'DESC']
-            ]
-        }).then(data => {
+        return new Promise(function (resolve, reject) {
 
-            // Group rows in object using createdAt
-            var groups = data.reduce(function (groups, row) {
+            // Get messages and order by createdAt date
+            models.message.findAll({
+                include: [{ model: models.user, model: models.location }],
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            }).then(data => {
 
-                var d = new Date(row.createdAt);
-                var strDate = (d.getMonth() + 1).padLeft(2) + '/' + (d.getDate() + 1).padLeft(2) + '/' + d.getFullYear();
+                // Group rows in object using createdAt
+                var groups = data.reduce(function (groups, row) {
 
-                if (!groups[strDate]) groups[strDate] = [];
+                    var d = new Date(row.createdAt);
+                    var strDate = (d.getMonth() + 1).padLeft(2) + '/' + (d.getDate() + 1).padLeft(2) + '/' + d.getFullYear();
 
-                groups[strDate].push(row);
+                    if (!groups[strDate]) groups[strDate] = [];
 
-                return groups;
+                    groups[strDate].push(row);
 
-            }, Object.create(null));
+                    return groups;
 
-            resolve(groups);
-        })
-    });
+                }, Object.create(null));
 
-}
+                resolve(groups);
+            })
+        });
 
-exports.getMessage = function (models) {
-    return null;
-}
+    }
 
-exports.sendMessage = function (message) {
-    return null;
+    module.get = function (id) {
+        return null;
+    }
+
+    module.insert = function (message) {
+        return null;
+    }
+
+    module.update = function (message) {
+        return null;
+    }
+
+    module.delete = function (id) {
+        return null;
+    }
+
+    return module;
 }

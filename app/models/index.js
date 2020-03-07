@@ -7,7 +7,7 @@ var env = process.env.NODE_ENV || "development";
 var config = require(path.join(__dirname, '../..', 'config', 'config.json'))[env];
 // Load CA certificate for SSL connection
 //config.dialectOptions.ssl.ca = fs.readFileSync(path.join(__dirname, '../..', 'config', 'BaltimoreCyberTrustRoot.crt.pem'));
-config.dialectOptions.ssl.ca = fs.readFileSync(path.join(__dirname, '../..', 'config', 'ca.pem'));
+//config.dialectOptions.ssl.ca = fs.readFileSync(path.join(__dirname, '../..', 'config', 'ca.pem'));
 var sequelize = new Sequelize(config.database, config.username, config.password, config);
 var db = {};
  

@@ -2,18 +2,24 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans">
     <style>
         body {
-        font-family: 'Open Sans';
-      }
-        a.nostyle:link, a.nostyle:visited, a.nostyle:hover, a.nostyle:active, span.nostyle {
+            font-family: 'Open Sans';
+        }
+
+        a.nostyle:link,
+        a.nostyle:visited,
+        a.nostyle:hover,
+        a.nostyle:active,
+        span.nostyle {
             text-decoration: none;
             color: white;
             cursor: pointer;
         }
+
         .text {
             height: auto !important;
         }
@@ -22,7 +28,28 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
     <script>
+        var hash;
+
+        if (window.requestIdleCallback) {
+            requestIdleCallback(function () {
+                Fingerprint2.get(function (components) {
+                    var values = components.map(function (component) { return component.value })
+                    var hash = Fingerprint2.x64hash128(values.join(''), 31)
+                    document.getElementById("hash").innerText = hash;
+                })
+            })
+        } else {
+            setTimeout(function () {
+                Fingerprint2.get(function (components) {
+                    var values = components.map(function (component) { return component.value })
+                    var hash = Fingerprint2.x64hash128(values.join(''), 31)
+                    document.getElementById("hash").innerText = hash;
+                })
+            }, 500)
+        }
+
         var OneSignal = window.OneSignal || [];
 
         OneSignal.push(function () {
@@ -37,7 +64,7 @@
                 });
             });
         });
-        
+
         OneSignal.push(function () {
             OneSignal.init({
                 appId: "3406e817-b8b6-40fd-b87e-b8dca58af298",
@@ -68,6 +95,7 @@
             {{{_sections.header}}}
         </div><!-- /header -->
         <div role="main" class="ui-content">
+            <div><span id="hash"></span></div><br/>
             {{{body}}}
         </div><!-- /content -->
         <div data-role="panel" id="left-panel" data-theme="b">
@@ -76,9 +104,9 @@
                     <div class="ui-btn ui-shadow ui-nodisc-icon ui-corner-all ui-icon-user ui-btn-icon-notext ui-btn-b ui-btn-inline"
                         style="margin-left:-10px;margin-top:2px;"></div>
                     {{#if isAuthenticated}}
-                        <span class="nostyle">{{username}}</span>
+                    <span class="nostyle">{{username}}</span>
                     {{else}}
-                        <span class="nostyle">Sign In</span>
+                    <span class="nostyle">Sign In</span>
                     {{/if}}
                 </a>
             </div>

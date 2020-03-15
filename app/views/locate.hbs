@@ -35,7 +35,7 @@
         }
         });
     }
-    
+
     function success(position) {
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
@@ -61,7 +61,6 @@
 
     function error(){}
 
-
 </script>
 <!--Load the API from the specified URL
     * The async attribute allows the browser to render the page while the API loads
@@ -69,5 +68,5 @@
     * The callback parameter executes the initMap() function
     -->
 <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcsH55isEQAgKEPi0RFi6pDgY2gD81C_Q&callback=geoFindMe">
+    src="https://maps.googleapis.com/maps/api/js?key={{api_key}}&callback=geoFindMe">
 </script>

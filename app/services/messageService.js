@@ -42,19 +42,55 @@ module.exports = (models) => {
     }
 
     module.get = function (id) {
-        return null;
+        return models.message.findByPk(id);
     }
 
     module.insert = function (message) {
-        return null;
+
+        // message = {
+        //     extid: '',
+        //     receipients: 0, 
+        //     text: ''
+        // }
+        
+        return new Promise(function (resolve, reject) {
+
+            models.message.create(message).then(data => {
+                model.message_location.create({
+                    messageId: data.id,
+                    locationId: data.locationId
+                })
+                .then(data => {
+                    resolve(data);
+                })
+            });
+        });
     }
 
     module.update = function (message) {
-        return null;
+
+        return new Promise(function (resolve, reject) {
+
+            models.message.findByPk({
+                id: message.id
+            })
+                .then(data => {
+                    data.updateAttributes({
+                        extid: data.extid,
+                        receipients: data.receipients,
+                        text: data.text
+                    })
+                        .then(data => {
+                            resolve(data);
+                        });
+                });
+        });
     }
 
     module.delete = function (id) {
-        return null;
+        return models.message.destroy({
+            id: id
+        });
     }
 
     return module;

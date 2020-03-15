@@ -1,7 +1,8 @@
 var exports = module.exports = {}
 
 exports.locate = function(req, res) {
-    res.render('locate');
+    var config = require("../../config/google/config.json");
+    res.render('locate', config);
 }
 
 exports.signup = function(req, res) {

@@ -11,6 +11,10 @@ module.exports = function(sequelize, Sequelize) {
         deviceId: {
             type: Sequelize.TEXT,
             notEmpty: true
+        },
+
+        extId: {
+            type: Sequelize.UUID
         }
     });
 

@@ -16,6 +16,7 @@ module.exports = function (app, passport) {
         failureRedirect: '/signup'
     }));
     app.get('/', homeController.home);
+    app.post('/validate', homeController.validate);
     app.get('/locate', authController.locate);
     app.get('/dashboard',isLoggedIn, dashboardController.dashboard);
     app.get('/message/new', messageController.new);

@@ -52,11 +52,11 @@ module.exports = (models) => {
         //     receipients: 0, 
         //     text: ''
         // }
-        
+        console.log(message);
         return new Promise(function (resolve, reject) {
 
             models.message.create(message).then(data => {
-                model.message_location.create({
+                models.message_location.create({
                     messageId: data.id,
                     locationId: data.locationId
                 })

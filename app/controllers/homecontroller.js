@@ -1,16 +1,8 @@
 var models = require("../models");
 var messageService = require("../services/messageService.js")(models);
 var deviceService = require("../services/deviceService.js")(models);
-//var notificationService = require("../services/notificationService.js")(models);
 
 exports.home = function (req, res) {
-
-  var message = {
-    contents: {"en": "This is a test message."}, 
-    included_segments: ["All"]
-  };
-
-  //notificationService.sendNotification(message);
 
   messageService.getAll().then(messages => {
     console.log(JSON.stringify(messages));
@@ -25,7 +17,8 @@ exports.home = function (req, res) {
 exports.validate = function (req, res) {
   console.log(req.body);
   var deviceId = req.body.deviceId;
-  deviceService.getDeviceById(deviceId).then(device => {
+  var extId = req.body.extId;
+  deviceService.getDeviceById(deviceId, extId).then(device => {
     if(device)
       res.json(device.extId);
     else

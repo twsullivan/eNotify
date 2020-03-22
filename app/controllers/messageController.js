@@ -4,10 +4,11 @@ var moment = require('moment');
 var sequelize = require("sequelize");
 var models = require("../models");
 var messageService = require("../services/messageService.js")(models);
+var notificationService = require("../services/notificationService.js")(models);
+
+var Locations = [{id:1,name:'UWF'},{id:2,name:'PSC'}];
 
 exports.new = function(req, res) {
-
-    var Locations = [{id:1,name:'UWF'},{id:2,name:'PSC'}];
 
     // Render sendmessage and pass in locations
     res.render('sendmessage', { Locations: Locations });
@@ -16,9 +17,12 @@ exports.new = function(req, res) {
 
 exports.send = function(req, res) {
 
-    var msg = req.body.messageText;
+    var msg = {
+        contents: { "en": req.body.MessageText },
+        included_segments: ["All"]
+    }
+    console.log("user ", req.user);
+    notificationService.sendNotification(msg, req.user);
 
-    messageService.sendMessage(msg);
-
-    res.render('Thank you');
+    res.render('sendmessage', { Locations: Locations });
 }

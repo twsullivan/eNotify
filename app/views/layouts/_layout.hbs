@@ -57,13 +57,33 @@
         OneSignal.push(function () {
             // Occurs when the user's subscription changes to a new value.
             OneSignal.on('subscriptionChange', function (isSubscribed) {
-                console.log("The user's subscription state is now:", isSubscribed);
-                OneSignal.push(function () {
-                    OneSignal.getUserId(function (userId) {
-                        console.log("OneSignal User ID:", userId);
-                        // (Output) OneSignal User ID: 270a35cd-4dda-4b3f-b04e-41d7463a2316    
+
+                if (isSubscribed) {
+                    {{!-- OneSignal.push(function () {
+                        OneSignal.sendTags({
+
+                        });
+                    }); --}}
+                    
+                    OneSignal.push(function () {
+                        OneSignal.getUserId(function (userId) {
+                            if (userId) {
+                                console.log("userId", userId)
+                                $.post("validate", { deviceId: null, extId: userId }).then(results => { console.log(results); });
+                                document.getElementById("hash").innerText = extId;
+                            }
+                            else {
+                                Fingerprint2.get(function (components) {
+                                    var values = components.map(function (component) { return component.value });
+                                    var deviceId = Fingerprint2.x64hash128(values.join(''), 31);
+                                    console.log("extId", deviceId);
+                                    $.post("validate", { deviceId: deviceId, extId: null }).then(results => { console.log(results); });
+                                    document.getElementById("hash").innerText = deviceId;
+                                });
+                            }
+                        });
                     });
-                });
+                }
             });
         });
 
@@ -73,12 +93,15 @@
             }).then(function () {
                 OneSignal.push(function () {
                     OneSignal.getUserId(function (userId) {
-                        console.log("OneSignal User ID:", userId);
-                        // (Output) OneSignal User ID: 270a35cd-4dda-4b3f-b04e-41d7463a2316 
-                        document.getElementById("hash").innerText = userId;
+                        Fingerprint2.get(function (components) {
+                            var values = components.map(function (component) { return component.value });
+                            var deviceId = Fingerprint2.x64hash128(values.join(''), 31);
+                            $.post("validate", { deviceId: deviceId, extId: userId }).then(results => { console.log(results); });
+                            document.getElementById("hash").innerText = deviceId + ":" + userId;
+                        });
                     });
                 });
-            })
+            });
         });
 
     </script>

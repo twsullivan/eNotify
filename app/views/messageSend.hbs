@@ -10,8 +10,8 @@
 <form id="sendMessage" method="post" action="/message/send" data-ajax="false">
     <div>
         <div data-role="fieldcontain">
-            <label for="basic">Name</label>
-            <input type="text" name="name" id="basic" data-mini="true" />
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" data-mini="true" value="{{User.firstname}} {{User.lastname}}" readonly/>
         </div>
         <div data-role="fieldcontain">
             <label for="location" class="select">Location</label>
@@ -22,11 +22,15 @@
             </select>
         </div>
         <div data-role="fieldcontain">
+            <label for="subject">Subject</label>
+            <input type="text" name="subject" id="subject" data-mini="true" />
+        </div>
+        <div data-role="fieldcontain">
             <label for="messagetext">Message Text</label>
             <textarea name="MessageText" id="messagetext" class="text" rows="6"></textarea>
         </div>
         <a href="/" data-role="button" data-inline="false">Cancel</a>
-        <a href="/" data-role="button" data-inline="false">Save</a>
+        {{!-- <a href="/" data-role="button" data-inline="false">Save</a> --}}
         <a href="#"  onclick="document.getElementById('sendMessage').submit();" data-role="button" data-inline="false">Send</a>
     </div>
 </form>

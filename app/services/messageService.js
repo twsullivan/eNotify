@@ -15,7 +15,7 @@ module.exports = (models) => {
 
             // Get messages and order by createdAt date
             models.message.findAll({
-                include: [{ model: models.user, model: models.location }],
+                include: [{ model: models.user }, { model: models.location }],
                 order: [
                     ['createdAt', 'DESC']
                 ]
@@ -25,7 +25,8 @@ module.exports = (models) => {
                 var groups = data.reduce(function (groups, row) {
 
                     var d = new Date(row.createdAt);
-                    var strDate = (d.getMonth() + 1).padLeft(2) + '/' + (d.getDate() + 1).padLeft(2) + '/' + d.getFullYear();
+                    //var strDate = (d.getMonth() + 1).padLeft(2) + '/' + (d.getDate() + 1).padLeft(2) + '/' + d.getFullYear();
+                    strDate = moment(d).format("dddd, MMMM D, YYYY");
 
                     if (!groups[strDate]) groups[strDate] = [];
 
@@ -42,17 +43,13 @@ module.exports = (models) => {
     }
 
     module.get = function (id) {
-        return models.message.findByPk(id);
+        return models.message.findAll({
+            include: [{ model: models.user }, { model: models.location }],
+            where: { id: id }
+        });
     }
 
     module.insert = function (message) {
-
-        // message = {
-        //     extid: '',
-        //     receipients: 0, 
-        //     text: ''
-        // }
-        console.log(message);
         return new Promise(function (resolve, reject) {
 
             models.message.create(message).then(data => {
@@ -60,30 +57,22 @@ module.exports = (models) => {
                     messageId: data.id,
                     locationId: data.locationId
                 })
-                .then(data => {
+                .then(data2 => {
                     resolve(data);
                 })
             });
         });
     }
 
-    module.update = function (message) {
-
-        return new Promise(function (resolve, reject) {
-
-            models.message.findByPk({
-                id: message.id
-            })
-                .then(data => {
-                    data.updateAttributes({
-                        extid: data.extid,
-                        receipients: data.receipients,
-                        text: data.text
-                    })
-                        .then(data => {
-                            resolve(data);
-                        });
-                });
+    module.update = function (msg) {
+        return models.message.update({
+            extid: msg.extid,
+            receipients: msg.receipients,
+            text: msg.text
+        }, {
+            where: {
+                id: msg.id
+            }
         });
     }
 

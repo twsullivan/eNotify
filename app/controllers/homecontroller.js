@@ -4,12 +4,18 @@ var deviceService = require("../services/deviceService.js")(models);
 
 exports.home = function (req, res) {
 
+  var groups = [];
+
   messageService.getAll().then(messages => {
     console.log(JSON.stringify(messages));
+    for (let [key, value] of Object.entries(messages)) {
+      groups.push({"date":key, "count":value.length, "messages":value});
+    }
+
     res.render('home', {
       isAuthenticated: req.isAuthenticated(),
       username: (req.user != undefined ? req.user.firstname + ' ' + req.user.lastname : 'Sign In'),
-      messages: messages
+      groups: groups
     });
   });
 }

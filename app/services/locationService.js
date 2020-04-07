@@ -5,36 +5,26 @@ module.exports = (models) => {
         return models.location.findByPk(id);
     }
 
-    module.insert = function (location) {
+    module.getAll = function () {
+        return models.location.findAll();
+    }
 
-        // location = {
-        //     name: 
-        //     longitude: 
-        //     latitude: 
-        //     radius: 
-        // }
+    module.insert = function (location) {
 
         return models.location.create(location);
     }
 
     module.update = function (location) {
 
-        return new Promise(function (resolve, reject) {
-
-            models.location.findByPk({
+        return models.location.update({
+            name: location.name,
+            longitude: location.longitude,
+            latitude: location.latitude,
+            radius: location.radius
+        }, {
+            where: {
                 id: location.id
-            })
-                .then(data => {
-                    data.updateAttributes({
-                        name: location.name,
-                        longitude: location.longitude,
-                        latitude: location.latitude,
-                        radius: location.radius
-                    })
-                        .then(data => {
-                            resolve(data);
-                        });
-                });
+            }
         });
     }
 

@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans">
     <style>
+        @media (display-mode: standalone){}
         body {
             font-family: 'Open Sans';
         }
@@ -24,85 +25,41 @@
             height: auto !important;
         }
     </style>
+    {{{_sections.css}}}
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script>
-        {{!-- var hash;
-
-        if (window.requestIdleCallback) {
-            requestIdleCallback(function () {
-                Fingerprint2.get(function (components) {
-                    var values = components.map(function (component) { return component.value });
-                    var hash = Fingerprint2.x64hash128(values.join(''), 31);
-                    $.post("validate", { deviceId: hash }).then(results => { console.log(results); });
-                    document.getElementById("hash").innerText = hash;
-                })
-            })
-        } else {
-            setTimeout(function () {
-                Fingerprint2.get(function (components) {
-                    var values = components.map(function (component) { return component.value });
-                    var hash = Fingerprint2.x64hash128(values.join(''), 31);
-                    $.post("validate", { deviceId: hash }).then(results => { console.log(results); });
-                    document.getElementById("hash").innerText = hash;
-                })
-            }, 500)
-        } --}}
-
         var OneSignal = window.OneSignal || [];
-
-        OneSignal.push(function () {
-            // Occurs when the user's subscription changes to a new value.
-            OneSignal.on('subscriptionChange', function (isSubscribed) {
-
-                if (isSubscribed) {
-                    {{!-- OneSignal.push(function () {
-                        OneSignal.sendTags({
-
-                        });
-                    }); --}}
-                    
-                    OneSignal.push(function () {
-                        OneSignal.getUserId(function (userId) {
-                            if (userId) {
-                                console.log("userId", userId)
-                                $.post("validate", { deviceId: null, extId: userId }).then(results => { console.log(results); });
-                                document.getElementById("hash").innerText = extId;
-                            }
-                            else {
-                                Fingerprint2.get(function (components) {
-                                    var values = components.map(function (component) { return component.value });
-                                    var deviceId = Fingerprint2.x64hash128(values.join(''), 31);
-                                    console.log("extId", deviceId);
-                                    $.post("validate", { deviceId: deviceId, extId: null }).then(results => { console.log(results); });
-                                    document.getElementById("hash").innerText = deviceId;
-                                });
-                            }
-                        });
-                    });
-                }
-            });
-        });
+        var deviceId;
 
         OneSignal.push(function () {
             OneSignal.init({
-                appId: "3406e817-b8b6-40fd-b87e-b8dca58af298",
-            }).then(function () {
-                OneSignal.push(function () {
-                    OneSignal.getUserId(function (userId) {
-                        Fingerprint2.get(function (components) {
-                            var values = components.map(function (component) { return component.value });
-                            var deviceId = Fingerprint2.x64hash128(values.join(''), 31);
-                            $.post("validate", { deviceId: deviceId, extId: userId }).then(results => { console.log(results); });
-                            document.getElementById("hash").innerText = deviceId + ":" + userId;
+                appId: "3406e817-b8b6-40fd-b87e-b8dca58af298"
+            });
+            OneSignal.getUserId(function (userId) {
+                deviceId = userId;
+            });
+            OneSignal.on('subscriptionChange', function (isSubscribed) {
+                if (isSubscribed) {
+                    $.post("register", { deviceId: deviceId }).then(function () {
+                        $.getJSON("locations", { deviceId: deviceId }).then(function (data) {
+                            if(Object.keys(data).length > 0) {
+                                OneSignal.push(function () {
+                                    OneSignal.sendTags(data);
+                                });
+                            }
                         });
-                    });
-                });
+                    }); 
+                }
             });
         });
+        OneSignal.push(["addListenerForNotificationOpened", function (message) {
+                $.post("increment", { deviceId: deviceId, messageId: message.data.id });
+        }]);
 
     </script>
     <script>
@@ -125,11 +82,10 @@
 
 <body>
     <div data-role="page" id="demo-page" data-url="demo-page">
-        <div data-role="header" data-theme="b">
+        <div data-role="header" data-theme="b" data-position="fixed">
             {{{_sections.header}}}
         </div><!-- /header -->
         <div role="main" class="ui-content">
-            <div><span id="hash"></span></div><br/>
             {{{body}}}
         </div><!-- /content -->
         <div data-role="panel" id="left-panel" data-theme="b">

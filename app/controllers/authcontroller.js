@@ -12,8 +12,8 @@ exports.signup = function(req, res) {
 }
 
 exports.signin = function(req, res) {
- 
-    res.render('login');
+ console.log('body: ',req.query.redirect);
+    res.render('login', { 'redirect': req.query.redirect });
  
 }
 

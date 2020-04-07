@@ -8,6 +8,7 @@
         data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Home</a></li>
 {{/section}}
 <form id="signin" name="signin" method="post" action="signin" class="ui-body ui-body-a ui-corner-all" data-ajax="false">
+    <input type='hidden' name='redirect' value='{{redirect}}'/>
     <fieldset>
         <div data-role="fieldcontain">
             <label for="username">Username:</label>
@@ -21,5 +22,5 @@
     </fieldset>
 </form>
 {{#section 'footer'}}
-<h1>Footer</h1>
+
 {{/section}}

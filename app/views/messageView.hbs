@@ -1,0 +1,33 @@
+{{#section 'header'}}
+<h1>Message</h1>
+<a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+    class="ui-nodisc-icon"></a>
+{{/section}}
+{{#section "menu"}}
+    <li><a href="/" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
+            data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Home</a></li>
+{{/section}}
+<form id="viewMessage" method="post" action="/message/view" data-ajax="false">
+    <div>
+        <div data-role="fieldcontain">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" data-mini="true" value="{{Message.user.firstname}} {{Message.user.lastname}}" readonly />
+        </div>
+        <div data-role="fieldcontain">
+            <label for="location">Location</label>
+            <input name="Location" id="location" data-mini="true" value="{{Message.locations.name}}" readonly />
+        </div>
+        <div data-role="fieldcontain">
+            <label for="subject">Subject</label>
+            <input type="text" name="subject" id="subject" data-mini="true" value="{{Message.subject}}" readonly />
+        </div>
+        <div data-role="fieldcontain">
+            <label for="messagetext">Message Text</label>
+            <textarea name="MessageText" id="messagetext" class="text" rows="6" readonly>{{Message.text}}</textarea>
+        </div>
+        <a href="/" data-role="button" data-inline="false">Close</a>
+    </div>
+</form>
+{{#section 'footer'}}
+
+{{/section}}

@@ -5,6 +5,7 @@ var session    = require('express-session');
 var bodyParser = require('body-parser');
 var env        = require('dotenv').config();
 var exphbs     = require('express-handlebars');
+var moment     = require('moment-timezone');
 
 //For BodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,6 +26,9 @@ app.engine('hbs', exphbs({
             if (!this._sections) this._sections = {};
             this._sections[name] = options.fn(this);
             return null;
+        },
+        formatDate: function(date, format){
+            return moment.tz(date, "America/Chicago").format(format);
         }
     }
 }));

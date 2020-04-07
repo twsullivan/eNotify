@@ -5,44 +5,51 @@ module.exports = (models) => {
     var config = require('../../config/onesignal/config.json');
 
     module.sendNotification = function (message, user) {
+        return messageService.insert({
+            extid: "",
+            receipients: 0,
+            text: message.contents.en,
+            userId: user.id
+        }).then(function (msg) {
+            message["app_id"] = config.api_id;
+            message["url"] = `https://enotify.iodrop.net/message/view?id=${msg.id}`;
+            //message["data"] = {"id": msg.id};
+            console.log("message: ", message["data"]);
+            var headers = {
+                "Content-Type": "application/json; charset=utf-8",
+                "Authorization": "Basic " + config.api_key
+            };
 
-        message["app_id"] = config.api_id;
+            var options = {
+                host: "onesignal.com",
+                port: 443,
+                path: "/api/v1/notifications",
+                method: "POST",
+                headers: headers
+            };
 
-        var headers = {
-            "Content-Type": "application/json; charset=utf-8",
-            "Authorization": "Basic " + config.api_key
-        };
-
-        var options = {
-            host: "onesignal.com",
-            port: 443,
-            path: "/api/v1/notifications",
-            method: "POST",
-            headers: headers
-        };
-
-        var req = https.request(options, function (res) {
-            res.on('data', function (data) {
-                console.log("user: ", user);
-                console.log("Response:");
-                var rdata = JSON.parse(data); 
-                console.log(rdata);
-                messageService.insert({
-                    extid: rdata.id,
-                    receipients: rdata.recipients,
-                    text: message.contents.en,
-                    userId: user.id
+            var req = https.request(options, function (res) {
+                res.on('data', function (data) {
+                    var rdata = JSON.parse(data);
+                    messageService.update({
+                        id: msg.id,
+                        extid: rdata.id,
+                        receipients: rdata.recipients,
+                        text: msg.text,
+                        userId: msg.userId
+                    });
                 });
             });
-        });
 
-        req.on('error', function (e) {
-            console.log("ERROR:");
-            console.log(e);
-        });
+            req.on('error', function (e) {
+                console.log("ERROR:");
+                console.log(e);
+                reject(e);
+            });
 
-        req.write(JSON.stringify(message));
-        req.end();
+            req.write(JSON.stringify(message));
+            req.end();
+        });
     };
 
     module.cancelNotification = function (id) {

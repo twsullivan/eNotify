@@ -19,6 +19,10 @@ module.exports = function(sequelize, Sequelize) {
         text: {
             type: Sequelize.TEXT,
             notEmpty: true
+        },
+
+        subject: {
+            type: Sequelize.TEXT
         }
     });
  

@@ -1,3 +1,12 @@
+{{#section 'css'}}
+    <style>
+        .ellipsis {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+{{/section}}
 {{#section 'header'}}
 <h1>eNotify</h1>
 <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
@@ -12,31 +21,20 @@
             data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Setup</a></li>
 {{/section}}
 <ul data-role="listview" data-inset="false">
-    <li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
-    <li><a href="index.html">
-            <h2>Stephen Smith</h2>
-            <p><strong>You've been invited to a meeting at Filament Group in Boston, MA</strong></p>
-            <p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.
-            </p>
-            <p class="ui-li-aside"><strong>6:24</strong>PM</p>
-        </a></li>
-    <li><a href="index.html">
-            <h2>jQuery Team</h2>
-            <p><strong>Boston Conference Planning</strong></p>
-            <p>In preparation for the upcoming conference in Boston, we need to start gathering a list of
-                sponsors and speakers.</p>
-            <p class="ui-li-aside"><strong>9:18</strong>AM</p>
-        </a></li>
-    <li data-role="list-divider">Thursday, October 7, 2010 <span class="ui-li-count">1</span></li>
-    <li><a href="index.html">
-            <h2>Avery Walker</h2>
-            <p><strong>Re: Dinner Tonight</strong></p>
-            <p>Sure, let's plan on meeting at Highland Kitchen at 8:00 tonight. Can't wait!</p>
-            <p class="ui-li-aside"><strong>4:48</strong>PM</p>
-        </a></li>
+    {{#groups}}
+    <li data-role="list-divider">{{date}} <span class="ui-li-count">{{count}}</span></li>
+        {{#messages}}
+        <li><a href="/message/view?id={{id}}">
+                <h2>{{user.firstname}} {{user.lastname}}</h2>
+                <p class="ellipsis"><strong>Subject: {{subject}}</strong></p>
+                <p class="ellipsis">{{text}}</p>
+                <p class="ui-li-aside"><strong>{{formatDate createdAt "h:mm A"}}</strong></p>
+            </a></li>
+        {{/messages}}
+    {{/groups}}
 </ul>
 {{#section 'footer'}}
-<div data-role="footer" data-theme="a" data-position="fixed">
+{{!-- <div data-role="footer" data-theme="a" data-position="fixed">
     <h1>Footer</h1>
-</div>
+</div> --}}
 {{/section}}

@@ -24,7 +24,7 @@ app.engine('hbs', exphbs({
     helpers: {
         section: function (name, options) {
             if (!this._sections) this._sections = {};
-            this._sections[name] = options.fn(this);
+                this._sections[name] = options.fn(this);
             return null;
         },
         formatDate: function(date, format){

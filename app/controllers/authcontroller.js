@@ -13,7 +13,11 @@ exports.signup = function(req, res) {
 
 exports.signin = function(req, res) {
  console.log('body: ',req.query.redirect);
-    res.render('login', { 'redirect': req.query.redirect });
+    res.render('login', { 
+        redirect: req.query.redirect, 
+        isAuthenticated: req.isAuthenticated(),
+        username: (req.user != undefined ? req.user.firstname + ' ' + req.user.lastname : 'Sign In')
+      });
  
 }
 

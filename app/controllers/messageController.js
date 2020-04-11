@@ -32,7 +32,11 @@ exports.view = function (req, res) {
     if (req.query.id)
         messageService.get(req.query.id).then(function (Message) {
             console.log("Message: ", Message[0]);
-            res.render('messageView', { Message: Message[0] });
+            res.render('messageView', {
+                redirectUrl: req.url,
+                isAuthenticated: req.isAuthenticated(),
+                username: (req.user != undefined ? req.user.firstname + ' ' + req.user.lastname : 'Sign In'), 
+                Message: Message[0] });
         });
     else
         res.redirect('https://enotify.iodrop.net');

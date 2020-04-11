@@ -1,5 +1,12 @@
+{{#section 'css'}}
+    <style>
+        #messagetext {
+            overflow-y: scroll !important;
+        }
+    </style>
+{{/section}}
 {{#section 'header'}}
-<h1>Message</h1>
+<h1>eNotify</h1>
 <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
     class="ui-nodisc-icon"></a>
 {{/section}}
@@ -7,8 +14,13 @@
     <li><a href="/" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
             data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Home</a></li>
 {{/section}}
+<style>
+    #messagetext {
+        overflow-y: scroll !important;
+    }
+</style>
 <form id="viewMessage" method="post" action="/message/view" data-ajax="false">
-    <div>
+    <fieldset>
         <div data-role="fieldcontain">
             <label for="name">Name</label>
             <input type="text" name="name" id="name" data-mini="true" value="{{Message.user.firstname}} {{Message.user.lastname}}" readonly />
@@ -25,8 +37,11 @@
             <label for="messagetext">Message Text</label>
             <textarea name="MessageText" id="messagetext" class="text" rows="6" readonly>{{Message.text}}</textarea>
         </div>
-        <a href="/" data-role="button" data-inline="false">Close</a>
-    </div>
+        {{#if isAuthenticated}}
+            <a href="/dashboard?id={{Message.id}}" data-role="button" data-inline="false" data-ajax="false">Response Status</a>
+        {{/if}}
+        <a href="/" data-role="button" data-inline="false"  data-ajax="false">Close</a>
+    </fieldset>
 </form>
 {{#section 'footer'}}
 

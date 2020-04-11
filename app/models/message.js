@@ -23,6 +23,12 @@ module.exports = function(sequelize, Sequelize) {
 
         subject: {
             type: Sequelize.TEXT
+        },
+
+        received: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            defaultValue: 0
         }
     });
  

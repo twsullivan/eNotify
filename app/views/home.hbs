@@ -13,18 +13,18 @@
     class="ui-nodisc-icon"></a>
 {{/section}}
 {{#section "menu"}}
-    <li><a href="/" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
-            data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Home</a></li>
+    {{#if isAuthenticated}}
     <li><a href="dashboard" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
-            data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Admin</a></li>
+            data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Locations</a></li>
+    {{/if}}
     <li><a href="dashboard" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
             data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Setup</a></li>
 {{/section}}
-<ul data-role="listview" data-inset="false">
+<ul data-role="listview" data-inset="false" data-filter="true">
     {{#groups}}
     <li data-role="list-divider">{{date}} <span class="ui-li-count">{{count}}</span></li>
         {{#messages}}
-        <li><a href="/message/view?id={{id}}">
+        <li><a href="/message/view?id={{id}}" data-ajax="false">
                 <h2>{{user.firstname}} {{user.lastname}}</h2>
                 <p class="ellipsis"><strong>Subject: {{subject}}</strong></p>
                 <p class="ellipsis">{{text}}</p>

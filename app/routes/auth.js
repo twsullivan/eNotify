@@ -6,10 +6,9 @@ var dashboardController = require('../controllers/dashboardcontroller.js');
 module.exports = function (app, passport) {
 
     function getRedirectUrl(req){
-        console.log('url: ', req.body)
         if (req && req.body.redirect)
             return req.body.redirect;
-        return "/dashboard";
+        return "/";
     }
 
     app.get('/signup', authController.signup);
@@ -23,12 +22,15 @@ module.exports = function (app, passport) {
     app.post('/signin', function (req, res, next) {
         passport.authenticate('local-signin', {
             successRedirect: getRedirectUrl(req),
-            failureRedirect: '/signup'
+            failureRedirect: '/failedSignin'
         })(req,res,next);
     });
     app.get('/', homeController.home);
     app.post('/validate', homeController.validate);
+    app.post('/register', homeController.register);
+    app.post('/increment', homeController.increment);
     app.get('/locate', authController.locate);
+    app.get('/locations', homeController.locations);
     app.get('/dashboard', isLoggedIn, dashboardController.dashboard);
     app.get('/message/new', isLoggedIn, messageController.new);
     app.post('/message/send', isLoggedIn, messageController.send);

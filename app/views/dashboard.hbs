@@ -1,3 +1,26 @@
+{{#section 'css'}}
+<style>
+  h1 {
+    text-align: center;
+  }
+  .chart-container {
+    width: 380px; 
+    height: 190px;
+  }
+  .center {
+    margin: auto;
+    width: 50%;
+  }
+  .responded {
+    display: inline-block;
+    background-color: rgb(75, 192, 192);
+  }
+  .noResponse {
+    display: inline-block;
+    background-color: rgb(255, 99, 132);
+  }
+</style>
+{{/section}}
 {{#section 'header'}}
 <h1>eNotify</h1>
 <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
@@ -7,8 +30,17 @@
   <li><a href="/" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
       data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Home</a></li>
 {{/section}}
-<canvas id="myChart"></canvas>
+<h1><span>Response Status</span></h1>
+<div class="chart-container">
+  <input id="percentResponded" type="hidden" value="{{percentResponded}}"/>
+  <input id="percentNoResponse" type="hidden" value="{{percentNoResponse}}"/>
+
+  <canvas id="messageStatusChart" class="chart-container"></canvas>
+</div>
 <script>
+  var percentResponded = $("#percentResponded").val();
+  var percentNoResponse = $("#percentNoResponse").val();
+
   Chart.pluginService.register({
   beforeDraw: function(chart) {
     var width = chart.chart.width,
@@ -20,38 +52,41 @@
     ctx.font = fontSize + "em open sans";
     ctx.textBaseline = "middle";
 
-    var text = "75%",
+    var text = percentResponded + "%",
         textX = Math.round((width - ctx.measureText(text).width) / 2),
-        textY = height / 2;
+        textY = (height / 2.25);
 
     ctx.fillText(text, textX, textY);
     ctx.save();
   }
 });
-  var ctx = document.getElementById('myChart').getContext('2d');
+  var ctx = document.getElementById('messageStatusChart').getContext('2d');
   new Chart(ctx, { 
     "type": "doughnut", 
     "data": { 
       "labels": [
-        "Red", 
-        "Blue", 
+        "Responded", 
+        "No Response", 
       ],
       "datasets": [
         { 
           "label": "Message Status", 
-          "data": [75, 25], 
+          "data": [percentResponded, percentNoResponse], 
           "backgroundColor": ["rgb(75, 192, 192)", "rgb(255, 99, 132)"] //, "rgb(54, 162, 235)", "rgb(255, 205, 86)"] //, "rgb(75, 192, 192)"]
         }
       ] 
     },
-    options: {
-        legend: {
-            display: false
+    "options": {
+        "legend": {
+            "display": true,
+            "position": "bottom"
         },
     "cutoutPercentage": "75",
+    "responsive": true,
+    "maintainAspectRatio": false
     }
   });
 </script>
 {{#section 'footer'}}
-<h1>Footer</h1>
+{{!-- <h1>Footer</h1> --}}
 {{/section}}

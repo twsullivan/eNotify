@@ -13,6 +13,7 @@ exports.home = function (req, res) {
     }
 
     res.render('home', {
+      redirectUrl: req.url,
       isAuthenticated: req.isAuthenticated(),
       username: (req.user != undefined ? req.user.firstname + ' ' + req.user.lastname : 'Sign In'),
       groups: groups
@@ -30,4 +31,18 @@ exports.validate = function (req, res) {
     else
       res.status(500).send("Device not found.");
   });
+}
+
+exports.increment = function (req, res) {
+  console.log('increment');
+  var messageId = req.body.messageId;
+  messageService.increment(messageId);
+}
+
+exports.register = function (req, res) {
+
+}
+
+exports.locations = function (req, res) {
+
 }

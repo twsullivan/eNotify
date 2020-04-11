@@ -58,7 +58,7 @@
             });
         });
         OneSignal.push(["addListenerForNotificationOpened", function (message) {
-                $.post("increment", { deviceId: deviceId, messageId: message.data.id });
+            $.post("https://enotify.iodrop.net/increment", { messageId: message.id });
         }]);
 
     </script>
@@ -96,7 +96,7 @@
                     {{#if isAuthenticated}}
                     <span class="nostyle">{{username}}</span>
                     {{else}}
-                    <span class="nostyle">Sign In</span>
+                    <a href="/signin?redirect={{redirectUrl}}"><span class="nostyle">Sign In</span></a>
                     {{/if}}
                 </a>
             </div>

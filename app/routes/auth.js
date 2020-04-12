@@ -12,11 +12,21 @@ module.exports = function (app, passport) {
     }
 
     app.get('/signup', authController.signup);
+    app.get('/reset', authController.reset);
     app.get('/signin', authController.signin);
     app.post('/signup', function (req, res, next) {
-        passport.authenticate('local-signup', {
+        passport.authenticate('local-signup', function(err, user, info) {
+            if (info) {
+                res.redirect(`/signup?message=${info.message}`);
+            } else {
+                res.redirect(getRedirectUrl(req));
+            }
+        })(req,res,next);
+    });
+    app.post('/reset', function (req, res, next) {
+        passport.authenticate('local-reset', {
             successRedirect: getRedirectUrl(req),
-            failureRedirect: '/signup'
+            failureRedirect: '/failedReset'
         })(req,res,next);
     });
     app.post('/signin', function (req, res, next) {
@@ -33,9 +43,10 @@ module.exports = function (app, passport) {
     app.get('/locations', homeController.locations);
     app.get('/dashboard', isLoggedIn, dashboardController.dashboard);
     app.get('/message/new', isLoggedIn, messageController.new);
-    app.post('/message/send', isLoggedIn, messageController.send);
+    app.post('/message/send', isSender, messageController.send);
     app.get('/message/view', messageController.view);
     app.get('/logout',authController.logout);
+    app.get('/unauthorized', authController.unauthorized);
 
     function isLoggedIn(req, res, next) {
 
@@ -44,6 +55,18 @@ module.exports = function (app, passport) {
         }
         res.redirect(`/signin?redirect=${req.url}`);
      
+    }
+
+    function isSender(req, res, next) {
+        if (req.isAuthenticated()) {
+            if ((req.user.permissions & 1) === 1 ) {
+                return next();
+            } else {
+                res.redirect(`/unauthorized`);
+            }
+        } else {
+            res.redirect(`/signin?redirect=${req.url}`);
+        }
     }
 }
 

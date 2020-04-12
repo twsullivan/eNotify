@@ -21,7 +21,7 @@ exports.send = function (req, res) {
         contents: { "en": req.body.MessageText },
         included_segments: ["All"]
     }
-    console.log("user ", req.user);
+    
     notificationService.sendNotification(msg, req.user);
 
     res.render('messageSend', { Locations: Locations });
@@ -31,7 +31,6 @@ exports.view = function (req, res) {
 
     if (req.query.id)
         messageService.get(req.query.id).then(function (Message) {
-            console.log("Message: ", Message[0]);
             res.render('messageView', {
                 redirectUrl: req.url,
                 isAuthenticated: req.isAuthenticated(),

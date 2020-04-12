@@ -5,6 +5,32 @@ module.exports = function (passport, user) {
     var User = user;
     var LocalStrategy = require('passport-local').Strategy;
 
+    //serialize
+    passport.serializeUser(function (user, done) {
+
+        done(null, user.id);
+
+    });
+
+    // deserialize user 
+    passport.deserializeUser(function (id, done) {
+
+        User.findByPk(id).then(function (user) {
+            if (user) {
+                
+                done(null, user.get());
+
+            } else {
+
+                done(user.errors, null);
+
+            }
+
+        });
+
+    });
+
+    // LOCAL SIGNUP
     passport.use('local-signup', new LocalStrategy(
 
         {
@@ -41,13 +67,9 @@ module.exports = function (passport, user) {
 
                     {
                         email: email,
-
                         password: userPassword,
-
                         firstname: req.body.firstname,
-
                         lastname: req.body.lastname
-
                     };
 
 
@@ -73,30 +95,48 @@ module.exports = function (passport, user) {
         }
     ));
 
-    //serialize
-    passport.serializeUser(function (user, done) {
+    // LOCAL RESET
+    passport.use('local-reset', new LocalStrategy(
 
-        done(null, user.id);
+        {
+            usernameField: 'email',
+            passwordField: 'password',
+            passReqToCallback: true // allows us to pass back the entire request to the callback
 
-    });
+        },
+        function (req, email, password, done) {
 
-    // deserialize user 
-    passport.deserializeUser(function (id, done) {
+            var generateHash = function (password) {
 
-        User.findByPk(id).then(function (user) {
-            if (user) {
-                
-                done(null, user.get());
+                return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
 
-            } else {
+            };
 
-                done(user.errors, null);
+            User.findOne({
+                where: {
+                    email: email
+                }
+            }).then(function (user) {
 
-            }
+                if (user) {
 
-        });
+                    var userPassword = generateHash(password);
 
-    });
+                    User.update({
+                        password: userPassword
+                    }, {
+                        where: {
+                            id: user.id
+                        }
+                    }).then(function (user){
+                        return done(null, user);
+                    });
+                    
+                }
+
+            });
+        }
+    ));
 
     //LOCAL SIGNIN
     passport.use('local-signin', new LocalStrategy(

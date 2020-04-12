@@ -7,14 +7,19 @@ exports.home = function (req, res) {
   var groups = [];
 
   messageService.getAll().then(messages => {
-    console.log(JSON.stringify(messages));
+
     for (let [key, value] of Object.entries(messages)) {
       groups.push({"date":key, "count":value.length, "messages":value});
     }
+    var isAdministrator = (req.user != undefined ? ((req.user.permissions & 2) === 2) ? true : false : false);
+    var isSender = (req.user != undefined ? ((req.user.permissions & 1) === 1) ? true : false : false);
 
     res.render('home', {
+      domain: "https://enotify.iodrop.net",
       redirectUrl: req.url,
       isAuthenticated: req.isAuthenticated(),
+      isAdmin: isAdministrator,
+      isSender: isSender,
       username: (req.user != undefined ? req.user.firstname + ' ' + req.user.lastname : 'Sign In'),
       groups: groups
     });
@@ -22,7 +27,6 @@ exports.home = function (req, res) {
 }
 
 exports.validate = function (req, res) {
-  console.log(req.body);
   var deviceId = req.body.deviceId;
   var extId = req.body.extId;
   deviceService.getDeviceById(deviceId, extId).then(device => {
@@ -34,7 +38,6 @@ exports.validate = function (req, res) {
 }
 
 exports.increment = function (req, res) {
-  console.log('increment');
   var messageId = req.body.messageId;
   messageService.increment(messageId);
 }

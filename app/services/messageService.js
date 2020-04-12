@@ -83,7 +83,7 @@ module.exports = (models) => {
     }
 
     module.increment = function (id) {
-        console.log('id: ',id);
+
         return models.message.findOne({
             where: {
               extid: id

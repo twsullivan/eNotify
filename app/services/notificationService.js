@@ -13,8 +13,7 @@ module.exports = (models) => {
         }).then(function (msg) {
             message["app_id"] = config.api_id;
             message["url"] = `https://enotify.iodrop.net/message/view?id=${msg.id}`;
-            //message["data"] = {"id": msg.id};
-            console.log("message: ", message["data"]);
+
             var headers = {
                 "Content-Type": "application/json; charset=utf-8",
                 "Authorization": "Basic " + config.api_key
@@ -188,7 +187,6 @@ module.exports = (models) => {
         var req = https.request(options, function (res) {
             res.on('data', function (data) {
                 var rdata = JSON.parse(data); 
-                console.log(rdata);
                 return rdata;
             });
         });

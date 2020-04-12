@@ -10,14 +10,12 @@ exports.dashboard = function(req, res) {
     var percentResponded = Math.round(parseInt(message[0].received, 10) / parseInt(message[0].receipients, 10) * 100);
     var percentNoResponse = 100 - percentResponded;
 
-    console.log("percentResponded: ",percentResponded);
-    console.log("percentNoResponse: ",percentNoResponse);
-
     res.render('dashboard', {
       isAuthenticated: req.isAuthenticated(),
       username: (req.user != undefined ? req.user.firstname + ' ' + req.user.lastname : 'Sign In'),
       percentResponded: percentResponded || 0,
-      percentNoResponse: percentNoResponse || 100
+      percentNoResponse: percentNoResponse || 100,
+      id: req.query.id
     });
   });
 }

@@ -45,9 +45,13 @@ module.exports = function(sequelize, Sequelize) {
         status: {
             type: Sequelize.ENUM('active', 'inactive'),
             defaultValue: 'active'
+        },
+ 
+        permissions: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            defaultValue: 0
         }
- 
- 
     });
  
     User.associate = (models, options) => {

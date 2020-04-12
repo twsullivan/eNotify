@@ -13,18 +13,28 @@
     class="ui-nodisc-icon"></a>
 {{/section}}
 {{#section "menu"}}
-    {{#if isAuthenticated}}
-    <li><a href="dashboard" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
-            data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Locations</a></li>
+    <li><a href="{{domain}}/settings" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
+            data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Settings</a></li>
+    {{#if isSender}}
+        <li><a href="{{domain}}/message/new" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
+                data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Send Message</a></li>
     {{/if}}
-    <li><a href="dashboard" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
-            data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Setup</a></li>
+    {{#if isAdmin}}
+        <li><a href="{{domain}}/dashboard" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
+                data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Edit Locations</a></li>
+        <li><a href="{{domain}}/dashboard" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
+                data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Edit Users</a></li>
+    {{/if}}
+    {{#if isAuthenticated}}
+        <li><a href="{{domain}}/logout" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
+            data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Sign Out</a></li>
+    {{/if}}
 {{/section}}
 <ul data-role="listview" data-inset="false" data-filter="true">
     {{#groups}}
     <li data-role="list-divider">{{date}} <span class="ui-li-count">{{count}}</span></li>
         {{#messages}}
-        <li><a href="/message/view?id={{id}}" data-ajax="false">
+        <li><a href="{{domain}}/message/view?id={{id}}" data-ajax="false">
                 <h2>{{user.firstname}} {{user.lastname}}</h2>
                 <p class="ellipsis"><strong>Subject: {{subject}}</strong></p>
                 <p class="ellipsis">{{text}}</p>

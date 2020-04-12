@@ -22,7 +22,7 @@
 
     function codeAddress() {
         var address = document.getElementById('address').value;
-        console.log(address);
+
         geocoder.geocode( { 'address': address}, function(results, status) {
         if (status == 'OK') {
             map.setCenter(results[0].geometry.location);
@@ -44,7 +44,7 @@
         // Initialize and add the map
         // The location of Uluru
         var uluru = { lat: parseFloat(latitude), lng: parseFloat(longitude) };
-        console.log(uluru);
+
         // The map, centered at Uluru
         map = new google.maps.Map(
             document.getElementById('map'), { zoom: 17, center: uluru });

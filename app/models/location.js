@@ -9,26 +9,10 @@ module.exports = function(sequelize, Sequelize) {
         },
  
         name: {
-            type: Sequelize.DATE,
+            type: Sequelize.TEXT,
             notEmpty: true
         },
 
-        longitude: {
-            type: Sequelize.INTEGER,
-            notEmpty: true
-        },
-
-        latitude: {
-            type: Sequelize.FLOAT,
-            notEmpty: true,
-            
-        },
-
-        radius: {
-            type: Sequelize.INTEGER,
-            notEmpty: true,
-            
-        }
     });
  
     return Location;

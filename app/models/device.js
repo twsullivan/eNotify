@@ -8,19 +8,14 @@ module.exports = function(sequelize, Sequelize) {
             type: Sequelize.INTEGER
         },
 
-        deviceId: {
-            type: Sequelize.TEXT,
-            notEmpty: true
-        },
-
         extId: {
             type: Sequelize.UUID
+        },
+
+        locationId: {
+            type:Sequelize.INTEGER
         }
     });
-
-    Device.associate = (models, options) => {
-        models.device.belongsTo(models.location);
-    }
 
     return Device;
  

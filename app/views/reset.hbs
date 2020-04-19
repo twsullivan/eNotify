@@ -1,18 +1,31 @@
-<!DOCTYPE html>
-<html>
- 
-<head>
-    <title>eNotify - Reset Password</title>
-</head>
- 
-<body>
-    <form id="reset" name="reset" method="post" action="reset">
-        <label for="email">Email Address</label>
-        <input class="text" name="email" type="text" />
-        <label for="password">New Password</label>
-        <input name="password" type="password" />
-        <input class="btn" type="submit" value="Reset" />
-    </form>
-</body>
- 
-</html>
+{{#section 'css'}}
+<style>
+    .center {
+        text-align: center;
+    }
+</style>
+{{/section}}
+{{#section 'header'}}
+<h1>eNotify</h1>
+<a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+    class="ui-nodisc-icon">Open left panel</a>
+{{/section}}
+{{#section "menu"}}
+<li><a href="/" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+        class="ui-nodisc-icon" data-ajax="false">Home</a></li>
+{{/section}}
+<span class="center"><h1>Reset User Password</h1></span>
+<form id="reset" name="reset" method="post" action="doReset" class="ui-body ui-body-a ui-corner-all" data-ajax="false">
+    <fieldset>
+        <div data-role="fieldcontain">
+            <label for="email">Username</label>
+            <input class="text" name="email" type="text" />
+        </div>
+        <div data-role="fieldcontain">
+            <label for="newPassword">New Password</label>
+            <input name="newPassword" type="password" />
+        </div>
+        <input class="btn" type="submit" data-theme="b" value="Reset" />
+</form>
+{{#section 'footer'}}
+{{/section}}

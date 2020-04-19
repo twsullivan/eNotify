@@ -1,23 +1,43 @@
-<!DOCTYPE html>
-<html>
- 
-<head>
-    <title></title>
-</head>
- 
-<body>
-    <form id="signup" name="signup" method="post" action="/signup">
-        <label for="email">Email Address</label>
-        <input class="text" name="email" type="email" />
-        <label for="firstname">Firstname</label>
-        <input name="firstname" type="text" />
-        <label for="lastname">Lastname</label>
-        <input name="lastname" type="text" />
-        <label for="password">Password</label>
-        <input name="password" type="password" />
-        <input class="btn" type="submit" value="Sign Up" />
-    </form>
- 
-</body>
- 
-</html>
+{{#section 'css'}}
+<style>
+    .center {
+        text-align: center;
+    }
+</style>
+{{/section}}
+{{#section 'header'}}
+<h1>eNotify</h1>
+<a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+    class="ui-nodisc-icon">Open left panel</a>
+{{/section}}
+{{#section "menu"}}
+<li><a href="/" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+        class="ui-nodisc-icon" data-ajax="false">Home</a></li>
+{{/section}}
+<span class="center">
+    <h1>Add User</h1>
+</span>
+<form id="signup" name="signup" method="post" action="/signup">
+    <fieldset>
+        <div data-role="fieldcontain">
+            <label for="email">Email Address</label>
+            <input class="text" name="email" type="email" />
+        </div>
+        <div data-role="fieldcontain">
+            <label for="firstname">Firstname</label>
+            <input name="firstname" type="text" />
+        </div>
+        <div data-role="fieldcontain">
+            <label for="lastname">Lastname</label>
+            <input name="lastname" type="text" />
+        </div>
+        <div data-role="fieldcontain">
+            <label for="password">Password</label>
+            <input name="password" type="password" />
+        </div>
+        <input class="btn" type="submit" value="Add User" />
+    </fieldset>
+</form>
+{{#section 'footer'}}
+
+{{/section}}

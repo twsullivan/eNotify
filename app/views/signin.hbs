@@ -1,18 +1,35 @@
-<!DOCTYPE html>
-<html>
- 
-<head>
-    <title></title>
-</head>
- 
-<body>
-    <form id="signin" name="signin" method="post" action="signin">
-        <label for="email">Email Address</label>
-        <input class="text" name="email" type="text" />
-        <label for="password">Password</label>
-        <input name="password" type="password" />
-        <input class="btn" type="submit" value="Sign In" />
-    </form>
-</body>
- 
-</html>
+{{#section 'css'}}
+<style>
+    .center {
+        text-align: center;
+    }
+</style>
+{{/section}}
+{{#section 'header'}}
+<h1>eNotify</h1>
+<a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+    class="ui-nodisc-icon">Open left panel</a>
+{{/section}}
+{{#section "menu"}}
+<li><a href="/" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+        class="ui-nodisc-icon" data-ajax="false">Home</a></li>
+{{/section}}
+<span class="center" style="text-align: center;">
+    <h1>Sign In</h1> 
+</span>
+<form id="signin" name="signin" method="post" action="signin">
+    <fieldset>
+        <div data-role="fieldcontain">
+            <label for="email">Email Address</label>
+            <input class="text" name="email" type="text" />
+        </div>
+        <div data-role="fieldcontain">
+            <label for="password">Password</label>
+            <input name="password" type="password" />
+        </div>
+        <input class="btn" type="submit" data-theme="b"value="Sign In" />
+    </fieldset>
+</form>
+{{#section 'footer'}}
+
+{{/section}}

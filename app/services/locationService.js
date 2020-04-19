@@ -11,16 +11,15 @@ module.exports = (models) => {
 
     module.insert = function (location) {
 
-        return models.location.create(location);
+        return models.location.create({
+            name: location.name
+        });
     }
 
     module.update = function (location) {
 
         return models.location.update({
-            name: location.name,
-            longitude: location.longitude,
-            latitude: location.latitude,
-            radius: location.radius
+            name: location.name
         }, {
             where: {
                 id: location.id
@@ -29,9 +28,7 @@ module.exports = (models) => {
     }
 
     module.delete = function (id) {
-        return models.location.destroy({
-            id: id
-        });
+        return models.location.destroy({ where: {id: id} });
     }
 
     return module;

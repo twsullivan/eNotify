@@ -1,0 +1,99 @@
+{{#section 'css'}}
+<style>
+    .center {
+        text-align: center;
+    }
+    div.ui-checkbox {
+        padding: 0px;
+        margin: 0px;
+        border: 0px;
+    }
+</style>
+{{/section}}
+{{#section 'header'}}
+<h1>eNotify</h1>
+<a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+    class="ui-nodisc-icon"></a>
+{{/section}}
+{{#section "menu"}}
+<li><a href="/" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+        class="ui-nodisc-icon" data-ajax="false">Home</a></li>
+{{/section}}
+
+<span class="center" style="text-align: center;">
+    <h1>Locations</h1>
+</span>
+
+<div class="ui-popup-container pop in ui-popup-active" style="max-width: 1506px; top: 595.605px; left: 589px;"
+    tabindex="0">
+    <div data-role="popup" id="popupAdd" data-overlay-theme="a" data-theme="c" style="max-width:400px;"
+        class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow" aria-disabled="false" data-disabled="false"
+        data-shadow="true" data-corners="true" data-transition="none" data-position-to="origin">
+        <div data-role="header" data-theme="b" class="ui-corner-top ui-header ui-bar-a" role="banner">
+            <h1 class="ui-title" role="heading" aria-level="1">Add Locations</h1>
+        </div>
+        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content ui-body-d" role="main">
+            <h3>Name:</h3>
+            <label for="newLocation" class="ui-hidden-accessible ui-input-text">Name:</label>
+            <input type="text" name="newLocation" id="newLocation" class="ui-input-text ui-body-a ui-corner-all ui-shadow-inset" value="" placeholder="Location Name" data-theme="a">
+            <a href="#" id="" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-corners="true"
+                data-shadow="true" data-iconshadow="true" data-wrapperels="span"
+                class="ui-btn ui-btn-up-c ui-shadow ui-btn-corner-all ui-btn-inline"><span
+                    class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Cancel</span></span></a>
+            <a href="#" id="btnAdd" data-role="button" data-inline="true" data-rel="back" data-transition="flow"
+                data-theme="b" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span"
+                class="ui-btn ui-btn-up-b ui-shadow ui-btn-corner-all ui-btn-inline"><span
+                    class="ui-btn-inner ui-btn-corner-all"><span
+                        class="ui-btn-text">&nbsp;&nbsp;Add&nbsp;&nbsp;</span></span></a>
+        </div>
+    </div>
+</div>
+
+<div class="ui-popup-container pop in ui-popup-active"
+    style="max-width: 1506px; top: 595.605px; left: 589px;" tabindex="0">
+    <div data-role="popup" id="popupConfirm" data-overlay-theme="a" data-theme="c" style="max-width:400px;"
+        class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow" aria-disabled="false" data-disabled="false"
+        data-shadow="true" data-corners="true" data-transition="none" data-position-to="origin">
+        <div data-role="header" data-theme="b" class="ui-corner-top ui-header ui-bar-a" role="banner">
+            <h1 class="ui-title" role="heading" aria-level="1">Delete Locations?</h1>
+        </div>
+        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content ui-body-d" role="main">
+            <h3 class="ui-title">Are you sure you want to delete these locations?</h3>
+            <p>This action cannot be undone.</p>
+            <a href="#" id="" data-role="button" data-inline="true" data-rel="back" data-theme="c"
+                data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span"
+                class="ui-btn ui-btn-up-c ui-shadow ui-btn-corner-all ui-btn-inline"><span
+                    class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Cancel</span></span></a>
+            <a href="#" id="btnOk" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b"
+                data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span"
+                class="ui-btn ui-btn-up-b ui-shadow ui-btn-corner-all ui-btn-inline"><span
+                    class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Delete</span></span></a>
+        </div>
+    </div>
+</div>
+
+<form id="locations" name="locations" method="post" action="locations">
+        <div data-role="content">
+            <ul id="lstLocations" data-role="listview">
+                {{#locations}}
+                    <li style="padding: 0px;margin: 0px;"><label style=""><input type="checkbox" name="checkbox" id="{{id}}" data-theme="c"/>{{name}}</label></li>
+                {{/locations}}
+            </ul>
+         </div>
+</form>
+{{#section 'footer'}}
+
+<div data-role="footer" data-position="fixed" data-theme="a">
+    <div style="margin: 0 20px 0 20px;">
+        <a href="#popupAdd" data-rel="popup" data-position-to="window"
+            class="ui-btn ui-shadow ui-corner-all ui-btn-b ui-btn-inline" data-inline="true"
+            data-transition="pop">&nbsp;&nbsp;Add&nbsp;&nbsp;</a>
+        <a href="#popupConfirm" id="btnDelete" data-rel="popup" data-position-to="window"
+            class="ui-btn ui-shadow ui-corner-all ui-btn-b ui-btn-inline ui-disabled"
+            data-inline="true">Delete</a>
+    </div>
+</div>
+
+<script src="https://enotify.iodrop.net/location.js"></script>
+
+{{/section}}

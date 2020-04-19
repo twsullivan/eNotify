@@ -5,6 +5,16 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+        .divider {
+            background-color: #333 !important;
+            border-color: #1f1f1f;
+            color: #fff;
+            text-shadow: 0 1px 0 #111;
+            font-weight: bold;
+        }
+        .child {
+            padding-left: 40px;
+        }
     </style>
 {{/section}}
 {{#section 'header'}}
@@ -13,22 +23,7 @@
     class="ui-nodisc-icon"></a>
 {{/section}}
 {{#section "menu"}}
-    <li><a href="{{domain}}/settings" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
-            data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Settings</a></li>
-    {{#if isSender}}
-        <li><a href="{{domain}}/message/new" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
-                data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Send Message</a></li>
-    {{/if}}
-    {{#if isAdmin}}
-        <li><a href="{{domain}}/dashboard" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
-                data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Edit Locations</a></li>
-        <li><a href="{{domain}}/dashboard" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
-                data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Edit Users</a></li>
-    {{/if}}
-    {{#if isAuthenticated}}
-        <li><a href="{{domain}}/logout" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
-            data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Sign Out</a></li>
-    {{/if}}
+
 {{/section}}
 <ul data-role="listview" data-inset="false" data-filter="true">
     {{#groups}}

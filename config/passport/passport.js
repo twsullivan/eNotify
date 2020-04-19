@@ -95,49 +95,6 @@ module.exports = function (passport, user) {
         }
     ));
 
-    // LOCAL RESET
-    passport.use('local-reset', new LocalStrategy(
-
-        {
-            usernameField: 'email',
-            passwordField: 'password',
-            passReqToCallback: true // allows us to pass back the entire request to the callback
-
-        },
-        function (req, email, password, done) {
-
-            var generateHash = function (password) {
-
-                return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
-
-            };
-
-            User.findOne({
-                where: {
-                    email: email
-                }
-            }).then(function (user) {
-
-                if (user) {
-
-                    var userPassword = generateHash(password);
-
-                    User.update({
-                        password: userPassword
-                    }, {
-                        where: {
-                            id: user.id
-                        }
-                    }).then(function (user){
-                        return done(null, user);
-                    });
-                    
-                }
-
-            });
-        }
-    ));
-
     //LOCAL SIGNIN
     passport.use('local-signin', new LocalStrategy(
 
@@ -179,7 +136,7 @@ module.exports = function (passport, user) {
                 }
 
                 if (!isValidPassword(user.password, password)) {
-
+                    console.log('Incorrect password.');
                     return done(null, false, {
                         message: 'Incorrect password.'
                     });

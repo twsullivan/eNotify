@@ -49,17 +49,11 @@ module.exports = (models) => {
         });
     }
 
-    module.insert = function (message) {
+    module.insert = function (message, locationId) {
         return new Promise(function (resolve, reject) {
-
-            models.message.create(message).then(data => {
-                models.message_location.create({
-                    messageId: data.id,
-                    locationId: data.locationId
-                })
-                .then(data2 => {
-                    resolve(data);
-                })
+            models.message.create(message).then(msg => {
+                msg.addLocations(locationId);
+                resolve(msg);
             });
         });
     }

@@ -3,36 +3,31 @@ module.exports = (models) => {
     var sequelize = require("sequelize");
     var module = {};
 
-    module.getDeviceById = function (deviceId, extId) {
-        if (deviceId)
-            return models.device.findOne({ where: { deviceId: deviceId } });
-        else
-            return models.device.findOne({ where: { extId: extId } });
+    module.getDeviceById = function (extId) {
+        return models.device.findAll({ where: { extId: extId } });
     }
 
     module.insert = function (device) {
+        console.log("device :", device);
         return models.device.create(device);
     }
 
-    module.update = function (device) {
+    module.update = function (extId, locationId) {
 
-        return new Promise(function (resolve, reject) {
-
-            models.device.findOne({
-                where: { extId: extId } 
-            })
-                .then(data => {
-                    data.updateAttributes({
-                        deviceId: data.deviceId,
-                        extId: data.extId,
-                        locationId: data.locationId
-                    })
-                        .then(data => {
-                            resolve(data);
-                        });
-                });
+        return models.device.update({
+            where: { extId: extId }
+        }, 
+        {
+            locationId: locationId
         });
     }
 
+    module.delete = function (extId, locationId) {
+        return models.device.destroy({ where: {extId: extId, locationId: locationId }});
+    }
+
+    module.deleteLocation = function (locationId) {
+        return models.device.destroy({where: {locationId: locationId}});
+    }
     return module;
 }

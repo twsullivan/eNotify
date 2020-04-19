@@ -9,12 +9,18 @@ exports.dashboard = function(req, res) {
     
     var percentResponded = Math.round(parseInt(message[0].received, 10) / parseInt(message[0].receipients, 10) * 100);
     var percentNoResponse = 100 - percentResponded;
+    
+    var isAdministrator = (req.user != undefined ? ((req.user.permissions & 2) === 2) ? true : false : false);
+    var isSender = (req.user != undefined ? ((req.user.permissions & 1) === 1) ? true : false : false);
 
     res.render('dashboard', {
+      domain: "https://enotify.iodrop.net",
+      isAdmin: isAdministrator,
+      isSender: isSender,
       isAuthenticated: req.isAuthenticated(),
       username: (req.user != undefined ? req.user.firstname + ' ' + req.user.lastname : 'Sign In'),
       percentResponded: percentResponded || 0,
-      percentNoResponse: percentNoResponse || 100,
+      percentNoResponse: percentNoResponse || 0,
       id: req.query.id
     });
   });

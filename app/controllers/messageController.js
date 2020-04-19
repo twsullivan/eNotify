@@ -4,38 +4,61 @@ var messageService = require("../services/messageService.js")(models);
 var notificationService = require("../services/notificationService.js")(models);
 var homeController = require('../controllers/homecontroller.js');
 
-var Locations = [{ id: 1, name: 'UWF' }, { id: 2, name: 'PSC' }];
-
 exports.new = function (req, res) {
-
-    // Render sendmessage and pass in locations
-    //var Locations;
-    //locationService.getAll().then(function (data) { Locations = data; });
-
-    res.render('messageSend', { Locations: Locations, User: req.user });
+    locationService.getAll().then(function(locations) {
+        var isAdministrator = (req.user != undefined ? ((req.user.permissions & 2) === 2) ? true : false : false);
+        var isSender = (req.user != undefined ? ((req.user.permissions & 1) === 1) ? true : false : false);
+        res.render('messageSend', { 
+            Locations: locations, 
+            User: req.user,
+            domain: "https://enotify.iodrop.net",
+            redirectUrl: req.url,
+            isAuthenticated: req.isAuthenticated(),
+            isAdmin: isAdministrator,
+            isSender: isSender,
+            username: (req.user != undefined ? req.user.firstname + ' ' + req.user.lastname : 'Sign In'),
+            username: (req.user != undefined ? req.user.firstname + ' ' + req.user.lastname : 'Sign In')
+        });
+    });
 }
 
 exports.send = function (req, res) {
 
-    var msg = {
-        contents: { "en": req.body.MessageText },
-        included_segments: ["All"]
-    }
-    
-    notificationService.sendNotification(msg, req.user);
+    locationService.get(req.body.Location).then(function(location){
 
-    res.render('messageSend', { Locations: Locations });
+        var msg = {
+            contents: { "en": req.body.MessageText },
+            //included_segments: ["All"]
+            filters: [
+                {"field": "tag", "key": location.name, "relation": "=", "value": location.name}
+                // {"operator": "OR"}, 
+                // {"field": "tag", "key": req.body.tag, "relation": "=", "value": req.body.tag}
+            ]
+        }
+
+        notificationService.sendNotification(msg, req.body.subject, location.id, req.user).then(function(id){
+            res.redirect(`https://enotify.iodrop.net/message/view?id=${id}`);
+        })
+    });
 }
 
 exports.view = function (req, res) {
 
     if (req.query.id)
         messageService.get(req.query.id).then(function (Message) {
+            var isAdministrator = (req.user != undefined ? ((req.user.permissions & 2) === 2) ? true : false : false);
+            var isSender = (req.user != undefined ? ((req.user.permissions & 1) === 1) ? true : false : false);
             res.render('messageView', {
                 redirectUrl: req.url,
+                domain: "https://enotify.iodrop.net",
+                redirectUrl: req.url,
                 isAuthenticated: req.isAuthenticated(),
-                username: (req.user != undefined ? req.user.firstname + ' ' + req.user.lastname : 'Sign In'), 
-                Message: Message[0] });
+                isAdmin: isAdministrator,
+                isSender: isSender,
+                username: (req.user != undefined ? req.user.firstname + ' ' + req.user.lastname : 'Sign In'),
+                Message: Message[0],
+                Location: Message[0].locations[0]
+            });
         });
     else
         res.redirect('https://enotify.iodrop.net');

@@ -24,6 +24,10 @@
         .text {
             height: auto !important;
         }
+        
+        .child {
+            padding-left: 40px;
+        }
     </style>
     {{{_sections.css}}}
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -42,20 +46,24 @@
             });
             OneSignal.getUserId(function (userId) {
                 deviceId = userId;
-            });
-            OneSignal.on('subscriptionChange', function (isSubscribed) {
-                if (isSubscribed) {
-                    $.post("register", { deviceId: deviceId }).then(function () {
-                        $.getJSON("locations", { deviceId: deviceId }).then(function (data) {
-                            if(Object.keys(data).length > 0) {
-                                OneSignal.push(function () {
-                                    OneSignal.sendTags(data);
-                                });
-                            }
-                        });
-                    }); 
+                if(window.location.href.indexOf('getDeviceId') != -1) {
+                    console.log('deviceId: ', deviceId);
+                    window.location.replace(`https://enotify.iodrop.net/settings?extId=${deviceId}`);
                 }
             });
+            //OneSignal.on('subscriptionChange', function (isSubscribed) {
+            //    if (isSubscribed) {
+            //        $.post("register", { deviceId: deviceId }).then(function () {
+            //            $.getJSON("locations", { deviceId: deviceId }).then(function (data) {
+            //                if(Object.keys(data).length > 0) {
+            //                    OneSignal.push(function () {
+            //                        OneSignal.sendTags(data);
+            //                    });
+            //                }
+            //            });
+            //        }); 
+            //    }
+            //});
         });
         OneSignal.push(["addListenerForNotificationOpened", function (message) {
             $.post("https://enotify.iodrop.net/increment", { messageId: message.id });
@@ -96,13 +104,34 @@
                     {{#if isAuthenticated}}
                     <span class="nostyle">{{username}}</span>
                     {{else}}
-                    <a href="/signin?redirect={{redirectUrl}}"><span class="nostyle">Sign In</span></a>
+                    <a href="/signin?redirect={{redirectUrl}}" data-ajax="false"><span class="nostyle">Sign In</span></a>
                     {{/if}}
                 </a>
             </div>
             <br />
             <ul data-role="listview">
                 {{{_sections.menu}}}
+                    <li><a href="{{domain}}/settings/getDeviceId" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
+                            data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Settings</a></li>
+                    {{#if isSender}}
+                    <li><a href="{{domain}}/message/new" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
+                            data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Send Message</a></li>
+                    {{/if}}
+                    {{#if isAdmin}}
+                    <li><a href="{{domain}}/locations" data-icon="carat-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+                            class="ui-nodisc-icon" data-ajax="false">Edit Locations</a></li>
+                    <li data-role="listview" class="divider">Users</li>
+                    <li><a href="{{domain}}/signup" class="child" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
+                            data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Add User</a></li>
+                    <li><a href="{{domain}}/reset" class="child" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
+                            data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Reset Password</a></li>
+                    <li><a href="{{domain}}/permissions" class="child" data-icon="carat-r" data-iconpos="notext" data-shadow="false"
+                            data-iconshadow="false" class="ui-nodisc-icon" data-ajax="false">Set Permissions</a></li>
+                    {{/if}}
+                    {{#if isAuthenticated}}
+                    <li><a href="{{domain}}/logout" data-icon="carat-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+                            class="ui-nodisc-icon" data-ajax="false">Sign Out</a></li>
+                    {{/if}}
             </ul>
         </div><!-- /panel -->
         {{{_sections.footer}}}

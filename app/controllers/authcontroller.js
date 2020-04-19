@@ -9,8 +9,12 @@ exports.locate = function(req, res) {
 }
 
 exports.signup = function(req, res) {
-    console.log("signup req query message: ", JSON.stringify(req.query));
+    var isAdministrator = (req.user != undefined ? ((req.user.permissions & 2) === 2) ? true : false : false);
+    var isSender = (req.user != undefined ? ((req.user.permissions & 1) === 1) ? true : false : false);
     res.render('signup', {
+        domain: "https://enotify.iodrop.net",
+        isAdmin: isAdministrator,
+        isSender: isSender,
         isAuthenticated: req.isAuthenticated(),
         username: (req.user != undefined ? req.user.firstname + ' ' + req.user.lastname : 'Sign In')
     });
@@ -18,7 +22,12 @@ exports.signup = function(req, res) {
 }
 
 exports.reset = function (req, res) {
+    var isAdministrator = (req.user != undefined ? ((req.user.permissions & 2) === 2) ? true : false : false);
+    var isSender = (req.user != undefined ? ((req.user.permissions & 1) === 1) ? true : false : false);
     res.render('reset', {
+        domain: "https://enotify.iodrop.net",
+        isAdmin: isAdministrator,
+        isSender: isSender,
         isAuthenticated: req.isAuthenticated(),
         username: (req.user != undefined ? req.user.firstname + ' ' + req.user.lastname : 'Sign In')
     });

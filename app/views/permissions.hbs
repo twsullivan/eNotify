@@ -27,7 +27,7 @@
 
 <div class="ui-popup-container pop in ui-popup-active" style="max-width: 1506px; top: 595.605px; left: 589px; min-width: 300px"
     tabindex="0">
-    <div data-role="popup" id="popupAdd" data-overlay-theme="a" data-theme="c" style="max-width:400px; min-width:300px;"
+    <div data-role="popup" id="popupEdit" data-overlay-theme="a" data-theme="c" style="max-width:400px; min-width:300px;"
         class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow" aria-disabled="false" data-disabled="false"
         data-shadow="true" data-corners="true" data-transition="none" data-position-to="origin">
         <div data-role="header" data-theme="b" class="ui-corner-top ui-header ui-bar-a" role="banner">
@@ -42,11 +42,11 @@
                 data-shadow="true" data-iconshadow="true" data-wrapperels="span"
                 class="ui-btn ui-btn-up-c ui-shadow ui-btn-corner-all ui-btn-inline"><span
                     class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Cancel</span></span></a>
-            <a href="#" id="btnAdd" data-role="button" data-inline="true" data-rel="back" data-transition="flow"
+            <a href="#" id="btnSave" data-role="button" data-inline="true" data-rel="back" data-transition="flow"
                 data-theme="b" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span"
                 class="ui-btn ui-btn-up-b ui-shadow ui-btn-corner-all ui-btn-inline"><span
                     class="ui-btn-inner ui-btn-corner-all"><span
-                        class="ui-btn-text">&nbsp;&nbsp;Add&nbsp;&nbsp;</span></span></a>
+                        class="ui-btn-text">&nbsp;Save&nbsp;</span></span></a>
         </div>
     </div>
 </div>
@@ -55,11 +55,11 @@
         <div data-role="content">
             <ul id="lstLocations" data-role="listview">
                 {{#users}}
-                    <li><a id="{{id}}" href="#popupAdd" data-rel="popup" data-position-to="window"><h3>{{firstname}} {{lastname}} ({{email}})</h3></a></li>
+                    <li><a class="item" id="{{id}}" href="#popupEdit" data-permission="{{permissions}}" data-rel="popup" data-position-to="window"><h3>{{firstname}} {{lastname}} ({{email}})</h3></a></li>
                 {{/users}}
             </ul>
          </div>
 </form>
 {{#section 'footer'}}
-
+<script src="permissions.js"></script>
 {{/section}}

@@ -18,3 +18,9 @@ exports.edit = function(req, res) {
     });
     
 }
+
+exports.set = function(req, res) {
+    permissionsService.update(req.body.id, req.body.permission).then(function(){
+        res.send("{status:'ok'}");
+    });
+}

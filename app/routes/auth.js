@@ -53,6 +53,7 @@ module.exports = function (app, passport) {
     app.post('/settings/add', setupController.add);
     app.post('/settings/remove', setupController.delete);
     app.get('/permissions', isLoggedIn, permissionsController.edit);
+    app.post('/permissions/set', isLoggedIn, permissionsController.set);
 
     function isLoggedIn(req, res, next) {
 

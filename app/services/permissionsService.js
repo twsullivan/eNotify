@@ -15,17 +15,9 @@ module.exports = (models) => {
 
     module.update = function (id, permissions) {
 
-        return models.device.update({
+        return models.user.update({
             permissions: permissions
         }, {
-            where: {
-                id: id
-            }
-        });
-    }
-
-    module.delete = function (id) {
-        return models.device.destroy({
             where: {
                 id: id
             }

@@ -35,51 +35,6 @@
 </form>
 {{#section 'footer'}}
 
-<div data-role="footer" data-position="fixed" data-theme="a">
-    {{!-- <div style="margin: 0 20px 0 20px;">
-        <a href="#" class="ui-btn ui-shadow ui-corner-all ui-btn-b ui-btn-inline" data-inline="true">Save</a>
-    </div> --}}
-</div>
-
-<script>
-    var extId = getUrlParameter('extId');
-
-    function getLocations() {
-        var tags = {};
-        var elements = $("input:checked").parent();
-        $.each(elements, function(idx, obj){
-            tags[$(this).text()] = $(this).text();
-        })
-        return tags;
-    }
-
-    $("[name='checkbox']").on('click', function () {
-        var text = $(this).parent().text();
-        if ($(this).is(":checked")) {
-            $.post('settings/add', { extId: extId, locationId: $(this).prop("id") }).then(function() {
-                OneSignal.push(function () {
-                    OneSignal.sendTags(getLocations()).then(function(tags){
-                    window.location.reload(false);
-                    });
-                });
-            });
-        } else {
-            $.post('settings/remove', {devices: [{ extId: extId, locationId: $(this).prop("id") }]}).then(function() {
-                OneSignal.push(function () {
-                    OneSignal.deleteTag(text).then(function(tags){
-                    window.location.reload(false);
-                    });
-                });
-            });
-        }
-    });
-
-    function getUrlParameter(name) {
-        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-        var results = regex.exec(location.search);
-        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    };
-</script>
+<script src="setup.js"></script>
 
 {{/section}}

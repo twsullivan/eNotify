@@ -55,7 +55,7 @@
         <div data-role="content">
             <ul id="lstLocations" data-role="listview">
                 {{#users}}
-                    <li><a class="item" id="{{id}}" href="#popupEdit" data-permission="{{permissions}}" data-rel="popup" data-position-to="window"><h3>{{firstname}} {{lastname}} ({{email}})</h3></a></li>
+                    <li><input type="checkbox" name="checkbox" id="{{id}}" data-theme="c" {{checked}}/><a class="item" id="{{id}}" href="#popupEdit" data-permission="{{permissions}}" data-rel="popup" data-position-to="window"><h3>{{firstname}} {{lastname}} ({{email}})</h3></a></li>
                 {{/users}}
             </ul>
          </div>
